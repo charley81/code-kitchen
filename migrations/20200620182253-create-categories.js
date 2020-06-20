@@ -6,22 +6,24 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Categories');
-  }
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('RecipesCate gories', null, {});
+    await queryInterface.bulkDelete('Recipes', null, {});
+    await queryInterface.bulkDelete('Categories', null, {});
+  },
 };

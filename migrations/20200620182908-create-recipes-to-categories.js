@@ -16,14 +16,26 @@ module.exports = {
           model: 'Recipes',
           key: 'id',
         },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       },
       categoriesId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Recipes',
+          model: 'Categories',
           key: 'id',
         },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
     });
   },
