@@ -15,7 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Recipes.associate = function (models) {
-    Recipes.belongsToMany(models.Categories, { through: 'RecipesCategories' });
+    Recipes.belongsToMany(models.Categories, {
+      through: 'RecipesCategories',
+      foreignKey: 'recipesId',
+      otherKey: 'categoriesId',
+    });
   };
   return Recipes;
 };

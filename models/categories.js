@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Categories.associate = function (models) {
-    Categories.belongsToMany(models.Recipes, { through: 'RecipesCategories' });
+    Categories.belongsToMany(models.Recipes, {
+      through: 'RecipesCategories',
+      foreignKey: 'categoriesId',
+      otherKey: 'recipesId',
+    });
   };
   return Categories;
 };
