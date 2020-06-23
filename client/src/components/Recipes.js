@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Recipes extends Component {
   constructor() {
@@ -21,12 +22,13 @@ export default class Recipes extends Component {
 
   render() {
     return (
-      <div className="Recipes">
+      <div>
         {this.state.recipes.map((recipe) => {
           return (
-            <div>
-              <h1>Recipe</h1>
-              <pre>{JSON.stringify(recipe, null, '\n')}</pre>
+            <div key={recipe.id}>
+              <h1>{recipe.name}</h1>
+              <p>{recipe.description}</p>
+              <Link to={`/recipes/${recipe.id}`}>Show Details</Link>
             </div>
           );
         })}
