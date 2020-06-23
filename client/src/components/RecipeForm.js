@@ -13,6 +13,12 @@ export default class RecipeForm extends Component {
   };
 
   handleFormSubmit = () => {
+    const body = new FormData();
+
+    Object.keys(this.state).forEach((key) => {
+      body.append(key, this.state[key]);
+    });
+
     fetch('/api/v1/recipes', {
       method: 'POST',
     });
@@ -37,7 +43,7 @@ export default class RecipeForm extends Component {
     return (
       <div>
         <form onSubmit={this.handleFormSubmit}>
-          <div className="styles.formGroup">
+          <div className={styles.formGroup}>
             <label htmlFor="name">Recipe Name</label>
             <input
               type="text"
