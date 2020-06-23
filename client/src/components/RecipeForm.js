@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import styles from './RecipeForm.module.css';
 
 export default class RecipeForm extends Component {
@@ -9,24 +10,26 @@ export default class RecipeForm extends Component {
     review: '',
     vegetarian: false,
     vegan: false,
-    glutenFree: false,
+    glutenfree: false,
   };
 
-  handleFormSubmit = () => {
-    const body = new FormData();
-
-    Object.keys(this.state).forEach((key) => {
-      body.append(key, this.state[key]);
-    });
-
+  handleFormSubmit = (e) => {
+    e.preventDefault();
     fetch('/api/v1/recipes', {
       method: 'POST',
-    });
+      body: JSON.stringify(this.state),
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.props.history.push(`/recipes/${data.id}`);
+      });
   };
 
   handleChange = (e) => {
-    const { value, name } = e.target.value;
-
+    const { value, name } = e.target;
     this.setState({
       [name]: value,
     });
@@ -41,7 +44,8 @@ export default class RecipeForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.RecipeForm}>
+        <h2>Submit a Review</h2>
         <form onSubmit={this.handleFormSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="name">Recipe Name</label>
@@ -59,12 +63,12 @@ export default class RecipeForm extends Component {
               type="text"
               id="url"
               name="url"
-              value={this.state.name}
+              value={this.state.url}
               onChange={this.handleChange}
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="url">Recipe Description</label>
+            <label htmlFor="description">Recipe Description</label>
             <textarea
               type="text"
               id="description"
@@ -74,7 +78,7 @@ export default class RecipeForm extends Component {
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="url">Recipe Review</label>
+            <label htmlFor="review">Recipe Review</label>
             <textarea
               type="text"
               id="review"
@@ -88,6 +92,7 @@ export default class RecipeForm extends Component {
               <li>
                 <input
                   type="checkbox"
+                  id="vegetarian"
                   name="vegetarian"
                   checked={this.state.vegetarian}
                   onChange={this.handleCheckboxChange}
@@ -97,6 +102,7 @@ export default class RecipeForm extends Component {
               <li>
                 <input
                   type="checkbox"
+                  id="vegan"
                   name="vegan"
                   checked={this.state.vegan}
                   onChange={this.handleCheckboxChange}
@@ -106,11 +112,12 @@ export default class RecipeForm extends Component {
               <li>
                 <input
                   type="checkbox"
-                  name="glutenFree"
-                  checked={this.state.glutenFree}
+                  id="glutenfree"
+                  name="glutenfree"
+                  checked={this.state.glutenfree}
                   onChange={this.handleCheckboxChange}
                 />
-                <label htmlFor="glutenFree">Gluten Free</label>
+                <label htmlFor="glutenfree">Gluten Free</label>
               </li>
             </ul>
           </div>
